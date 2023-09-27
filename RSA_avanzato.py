@@ -1,9 +1,12 @@
-
 from ast import literal_eval
 import random 
 import Crypto.Util.number
 import math  
 import time
+import sys
+
+
+sys.set_int_max_str_digits(100000)
 
 print("""\
  ██▀███    ██████  ▄▄▄          ▄████▄   ▒█████  ▓█████▄ ▓█████  ██▀███  
@@ -23,7 +26,7 @@ ascii_values = [ord(character) for character in text]
 print('')
 
 startC = time.time()
-N=4300
+N=8192 
 q= Crypto.Util.number.getPrime(N, randfunc=None)
 f=1
 while(f!=0):
@@ -54,7 +57,7 @@ startD = time.time()
 d = pow(int(e), -1, int(phi))
 
 #decripter
-time.sleep(5)
+time.sleep(3)
 print('')
 print('')
 print('')
@@ -96,9 +99,18 @@ f.write('il tempo di esecuzione di questo per criptare: ' + str(tempoC) + ' sec\
 f.write('il tempo di esecuzione di questo per decriptare: ' + str(tempoD) + ' sec\n')
 f.close()
 
-#francesco genovese R3tr0 
-#V. 4.0
+
+ss = input("vuoi avaere i dati qui a schermo ? ")
+if ss == "si" or ss=="SI":
+    print("tempo di crittazione: " + str(tempoC)+' sec\n')
+    print("tempo decrittazione: "+ str(tempoD)+ ' sec\n')
+    print("la tua chiave per decriptare è : "+ str(d) + '\n')
+else: 
+        print('ａｒｒｉｖｅｄｅｒｃｉ')
 
 
 
-#V. 5.0 divisione del cripter e decripter 
+#francesco genovese aka -R3tr0 
+
+#V. 7.1 possibilita di viionari e dati a schermo e non solo tramite il file 
+#problema del limite dell string risolto.
