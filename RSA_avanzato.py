@@ -4,8 +4,6 @@ import Crypto.Util.number
 import math  
 import time
 import sys
-
-
 sys.set_int_max_str_digits(100000)
 
 print("""\
