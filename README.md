@@ -1,4 +1,13 @@
 # RSA
+In order to make it work, you need to install "pycryptodome" using the following command:
+
+```bash
+pip install pycryptodome
+```
+
+This command will install the "pycryptodome" package, which is necessary for the functionality you mentioned.
+
+
 RSA (Rivest-Shamir-Adleman) is a widely used asymmetric encryption algorithm in the field of cryptography. It was first introduced by Ron Rivest, Adi Shamir, and Leonard Adleman in 1977. RSA encryption relies on the mathematical properties of large prime numbers and is known for its security and versatility. Here's a brief description of the RSA encryption algorithm in English:
 
 RSA Encryption Algorithm:
