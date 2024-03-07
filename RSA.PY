@@ -3,13 +3,29 @@ import random
 import Crypto.Util.number
 import math  
 import time
+import os 
 import sys
+
+
+
+def file():
+    file_path = input("Inserisci il percorso completo del file di testo: ")
+    if os.path.exists(file_path):
+        with open(file_path, 'r') as file:
+            content_array = file.readlines()
+        print("Contenuto del file memorizzato nell'array:")
+        for line in content_array:
+            print(line.strip()) 
+        return content_array
+    else:
+        print("Il file specificato non esiste.")
+        sys.exit()
 
 
 def data():
     m = input('vuoi creare il file? ')
     if m == 'si':
-        f  = open('RSA.txt', 'w')
+        f  = open('Outout.txt', 'w')
         f.write('lunghezza primary: '+ str(N) + '\n')
         f.write('numero primari p: '+ str(p) + '\n')
         f.write('secondary primari q: '+ str(q) + '\n')
@@ -31,9 +47,16 @@ scelta  = input ("cosa vuoi fare ? criptare o decriptare ? (c/d): ")
 
 if(scelta == "c" or scelta == "C"):
     print("""RSA CODER""")
-
-    text = input("inserisci la frase da criptare: ")
-    ascii_values = [ord(character) for character in text]
+    ds = input ("come vuoi criptare? da file o scrivere un testo ? (f / t): ")
+    if ds == "f":
+        text = file()
+        ascii_values = [ord(character) for line in text for character in line.strip()]
+    elif ds == "t":
+        text = input("inserisci la frase da criptare: ")
+        ascii_values = [ord(character) for character in text]
+    else: 
+        print (" scelta nn valida")
+        sys.exit()
     print('')
 
     startC = time.time()
@@ -59,11 +82,15 @@ if(scelta == "c" or scelta == "C"):
         else: 
             a = 1
     ArrC = []
-    for i in ascii_values:
-        c = pow(int(i),int(e),int(n))
-        ArrC.append(hex(c))
-    compC=''.join(ArrC)
-    print(compC)
+    for line in text:
+        for char in line.strip():
+            c = pow(ord(char), int(e), int(n))
+            ArrC.append(hex(c))
+    compC = ''.join(ArrC)
+    print('il testo criptato : ' + compC)
+    f = open('inputfile.txt', 'w')
+    f.write(str(compC))
+    f.close()
     endC = time.time()
     startD = time.time()
     d = pow(int(e), -1, int(phi))
@@ -75,23 +102,31 @@ if(scelta == "c" or scelta == "C"):
 
 elif (scelta == "d" or scelta == "D" ):
     #decripter
-    time.sleep(1)
     print('')
     print('')
     print('')
     print("""RSA DECODER""")
     ArrD = []
-    ArrC = input('inserisci la frase da deciptare: ')
+    ds = input ("come vuoi decriptare? da file o scrivere un testo ? (f / t): ")
     p = input( 'inserisci la tua p: ')
     q = input( 'inserisci la tua q: ')
     n = int(p)*int(q)
     d = input ('inserrisci la key: ')
     startD = time.time()
-    for i in ArrC.split('0x')[1:]:
-        m = pow(int(i, 16), int(d), int(n))
-        ArrD.append(chr(m))
+    if ds == "f":
+        ArrC = file()
+        for line in ArrC:
+            hex_values = line.split('0x')[1:]
+            for hex_value in hex_values:
+                m = pow(int(hex_value, 16), int(d), int(n))
+                ArrD.append(chr(m))
+    elif ds == "t":
+        ArrC = input('inserisci la frase da decifrare: ')
+        for i in ArrC.split('0x')[1:]:
+            m = pow(int(i, 16), int(d), int(n))
+            ArrD.append(chr(m))
     compD=''.join(ArrD)
-    print(compD)
+    print('il testo decriptato è: '+ compD)
     endD = time.time()
     tempoD = (endD - startD)
     compC = 0
@@ -100,10 +135,10 @@ elif (scelta == "d" or scelta == "D" ):
     data()
 else:
     print("scelta nn valida")
-    exit 
+    sys.exit()
 
 
 
 
 #R3tr0 
-#V. 9.0
+#V. 10.0
